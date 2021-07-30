@@ -1,0 +1,56 @@
+version: '3.4'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    links:
+      - 'db:postgres'
+    ports:
+      - '8000:80'
+    env_file: .env-local
+    depends_on:
+      - db
+      - redis
+    restart: on-failure
+    entrypoint: /usr/src/app/django-entrypoint.sh
+
+  db:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: 'db'
+      POSTGRES_HOST_AUTH_METHOD: trust
+    expose:
+      - "5432"
+    restart: always
+
+  celeryworker:
+    build: .
+    command: celery -A apps.rss_feed worker -l info
+    volumes:
+      - ".:/usr/src/app"
+    depends_on:
+      - db
+      - redis
+    restart: always
+    links:
+      - 'db:postgres'
+
+  celerybeat:
+    build: .
+    command: celery -A apps.rss_feed beat -l info
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ".:/usr/src/app"
+    restart: always
+    links:
+      - 'db:postgres'
+
+  redis:
+    image: "redis:alpine"
+    restart: on-failure

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ object.title }}</h1>
+    <div>{{ object.publish_date }}</div>
+    {% if object.thumbnail %}
+        <img src="{{ object.thumbnail }}" alt="thumbnail" width="100">
+    {% endif %}
+    <a href="{{ object.link }}" target="_blank">{{ object.link }}</a>
+{% endblock %}

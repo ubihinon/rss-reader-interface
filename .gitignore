@@ -1,0 +1,33 @@
+# compiled backend files
+__pycache__/
+*.py[cod]
+*$py.class
+*.mo
+
+# compiled frontend files
+node_modules/
+frontend/dist
+.sass-cache
+*.css.map
+
+# dev files
+.idea/
+/.aldryn
+/data
+data.tar.gz
+.secret_key
+.venv
+*.sqlite3
+/*.log
+.DS_Store
+/requirements.urls
+celerybeat-schedule
+
+# django files
+media/
+/static_collected
+
+
+# documentation
+/docs/_*
+/docs/env

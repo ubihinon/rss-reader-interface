@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table>
+        {% for object in object_list %}
+            <tr>
+                <td>
+                    <a href="{{ object.id }}/" target="_blank">{{ object.title }}</a>
+                </td>
+                <td>
+                    {{ object.publish_date }}
+                </td>
+                <td>
+                    {% if object.thumbnail %}
+                        <img src="{{ object.thumbnail }}" alt="thumbnail" width="100">
+                    {% endif %}
+                </td>
+            </tr>up
+        {% endfor %}
+    </table>
+{% endblock %}
